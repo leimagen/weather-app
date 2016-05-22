@@ -1,43 +1,23 @@
 var React = require('react');
 var WeatherListItem = require('./WeatherListItem.jsx');
+var HTTP = require('../../services/httpservice');
 
 var WeatherListManager = React.createClass({
     getInitialState: function(){
-        return {weatherDays:[
-            {
-                "id": "3216546",
-                "date": "26 Aug 2016",
-                "icon": "Sol",
-                "min": 16,
-                "max": 24
-            },
-            {
-                "id": "56496362",
-                "date": "27 Aug 2016",
-                "icon": "Nub",
-                "min": 13,
-                "max": 20
-            },
-            {
-                "id": "8725218",
-                "date": "28 Aug 2016",
-                "icon": "Llu",
-                "min": 18,
-                "max": 30
-            },
-            {
-                "id": "89542632",
-                "date": "29 Aug 2016",
-                "icon": "Sol",
-                "min": 19,
-                "max": 35
-            }
-        ]};
+        return {weatherData:[]};
+    },
+
+    componentWillMount: function(){
+        HTTP.get('london')
+        .then(function(data) {
+            this.setState({weatherData: data});
+        }.bind(this));
     },
 
     render: function() {
-        var WeatherListItems = this.state.weatherDays.map(function(item) {
-            return <WeatherListItem key={item.id} date={item.date} icon={item.icon} min={item.min} max={item.max} />;
+        var d = new Date();
+        var WeatherListItems = this.state.weatherData.map(function(item) {
+            return <WeatherListItem key={item.weather.id} date={d.toDateString()} icon={item.weather.icon} min={item.weather.temp_min} max={item.weather.temp_max} />;
         });
 
         return (
