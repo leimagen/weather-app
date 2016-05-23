@@ -1,50 +1,59 @@
 var React = require('react');
-var HTTP = require('../../services/httpservice');
+const Icon = require('react-icon');
+
+var d = new Date();
 
 var WeatherCity = React.createClass({
-    getInitialState: function(){
-        return {weatherData:[]};
-    },
-    componentWillMount: function(){
-        HTTP.get('london')
-        .then(function(data) {
-            this.setState({weatherData: data});
-        }.bind(this));
-    },
-    render: function() {
 
-        if(this.state.weatherData) {
-            var cityName = this.state.weatherData.name;
-            var countryName = '';
-        } else {
-            var cityName = 'Loading';
-            var countryName = 'Loading';
+    render: function() {
+        var colorWhite = {
+            color: "white"
         };
 
         var divStyle = {
-            backgroundColor: "#79b8af",
+            backgroundColor: "#a1a1a1",
             height: "auto",
-            padding: 20
+            padding: 20,
+            marginTop: 20
+        };
+
+        if(this.props.headingColor){
+            divStyle.backgroundColor = this.props.headingColor;
+        };
+
+        var smallTopMargin = {
+            marginTop: -10
+        };
+
+        var mainTempText = {
+            color: "white",
+            fontSize: 60,
+            fontWeight: "bold"
         };
 
         return (
             <div className="col-sm-12" style={divStyle}>
                 <div className="row">
-                    <div className="col-sm-10 pull-left">
-                        <div><p>{cityName}, {countryName}</p></div>
-                        <div>Today, 25 Aug 2012</div>
+                    <div className="col-sm-8 pull-left" style={colorWhite}>
+                        <div style={colorWhite, smallTopMargin}><h3><strong>{this.props.cityName}</strong>, {this.props.countryName}</h3></div>
+                        <div style={colorWhite, smallTopMargin}>{d.toDateString()}</div>
                     </div>
-                    <div className="col-sm-2 pull-right">Lupa</div>
+                    <div className="col-sm-2 pull-right">
+                        <Icon glyph="search fa-lg" style={colorWhite} />
+                    </div>
                 </div>
-                <div className="row text-center">
-                    <h1><span>ICO</span><span><strong> 25&#186;</strong></span></h1>
+                <div className="col-sm-12 text-center">
+                    <span><img src={this.props.mainIcon} /></span>
+                    <p style={mainTempText}>{this.props.temperature}&#186;</p>
                 </div>
                 <div className="row">
-                    <div className="col-sm-6 text-center">
-                        <h4><span>ICO</span><span> WIND DIRECTION</span></h4>
+                    <div className="col-sm-6 text-center" style={colorWhite}>
+                        <span><Icon glyph="arrows"/></span><span style={colorWhite}> Wind dir. </span>
+                        <span><strong>{this.props.windDirection}</strong></span><span> deg</span>
                     </div>
-                    <div className="col-sm-6 text-center">
-                        <h4><span>ICO</span><span> WIND SPEED</span></h4>
+                    <div className="col-sm-6 text-center" style={colorWhite}>
+                        <span><Icon glyph="arrow-right"/></span><span style={colorWhite}> Wind sp. </span>
+                        <span><strong> {this.props.windSpeed}</strong></span><span> mph</span>
                     </div>
                 </div>
             </div>

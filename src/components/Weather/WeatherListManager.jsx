@@ -1,27 +1,40 @@
 var React = require('react');
 var WeatherListItem = require('./WeatherListItem.jsx');
-var HTTP = require('../../services/httpservice');
 
 var WeatherListManager = React.createClass({
-    getInitialState: function(){
-        return {weatherData:[]};
-    },
-
-    componentWillMount: function(){
-        HTTP.get('london')
-        .then(function(data) {
-            this.setState({weatherData: data});
-        }.bind(this));
-    },
-
     render: function() {
-        var d = new Date();
-        var WeatherListItems = this.state.weatherData.map(function(item) {
-            return <WeatherListItem key={item.weather.id} date={d.toDateString()} icon={item.weather.icon} min={item.weather.temp_min} max={item.weather.temp_max} />;
-        });
+        if(this.props.data){
+
+            var forecastDate1 = this.props.data.list[10].dt_txt;
+            var forecastIcon1Url = 'http://openweathermap.org/img/w/' + this.props.data.list[10].weather[0].icon + '.png';
+            var forecastMin1 = Math.round(this.props.data.list[0].main.temp_min);
+            var forecastMax1 = Math.round(this.props.data.list[0].main.temp_max);
+
+            var forecastDate2 = this.props.data.list[18].dt_txt;
+            var forecastIcon2Url = 'http://openweathermap.org/img/w/' + this.props.data.list[18].weather[0].icon + '.png';
+            var forecastMin2 = Math.round(this.props.data.list[0].main.temp_min);
+            var forecastMax2 = Math.round(this.props.data.list[0].main.temp_max);
+
+            var forecastDate3 = this.props.data.list[26].dt_txt;
+            var forecastIcon3Url = 'http://openweathermap.org/img/w/' + this.props.data.list[26].weather[0].icon + '.png';
+            var forecastMin3 = Math.round(this.props.data.list[0].main.temp_min);
+            var forecastMax3 = Math.round(this.props.data.list[0].main.temp_max);
+
+            var forecastDate4 = this.props.data.list[34].dt_txt;
+            var forecastIcon4Url = 'http://openweathermap.org/img/w/' + this.props.data.list[34].weather[0].icon + '.png';
+            var forecastMin4 = Math.round(this.props.data.list[0].main.temp_min);
+            var forecastMax4 = Math.round(this.props.data.list[0].main.temp_max);
+        }
 
         return (
-            <ul className="list-group">{WeatherListItems}</ul>
+            <table className="table table-striped">
+                <tbody>
+                    <WeatherListItem date={forecastDate1} foreIcon={forecastIcon1Url} min={forecastMin1} max={forecastMax1} />
+                    <WeatherListItem date={forecastDate2} foreIcon={forecastIcon2Url} min={forecastMin2} max={forecastMax2} />
+                    <WeatherListItem date={forecastDate3} foreIcon={forecastIcon3Url} min={forecastMin3} max={forecastMax3} />
+                    <WeatherListItem date={forecastDate4} foreIcon={forecastIcon4Url} min={forecastMin4} max={forecastMax4} />
+                </tbody>
+            </table>
         );
     }
 });

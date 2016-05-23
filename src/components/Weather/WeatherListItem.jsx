@@ -2,14 +2,22 @@ var React = require('react');
 
 var WeatherListItem = React.createClass({
     render: function() {
+
+        var centerText = {
+            textAlign: "center",
+        };
+
+        var iconStyle = {
+            width: 30,
+            height: 30
+        }
+
         return (
-            <li className="col-sm-12 list-group-item">
-                <div className="col-sm-5 pull-left">{this.props.date}</div>
-                <div className="col-sm-3 text-center">{this.props.icon}</div>
-                <div className="col-sm-4 pull-right text-center">
-                    <span>{this.props.min}</span><span>/</span><span>{this.props.max}</span>
-                </div>
-            </li>
+            <tr style={centerText}>
+                <td><h6>{this.props.date}</h6></td>
+                <td><img src={this.props.foreIcon} style={iconStyle} /></td>
+                <td><h6>Min {this.props.min}&#186; / Max {this.props.max}&#186;</h6></td>
+            </tr>
         );
     }
 });

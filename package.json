@@ -19,9 +19,11 @@
   "homepage": "https://github.com/leimagen/weather-app#readme",
   "dependencies": {
     "babel-preset-react": "^6.5.0",
+    "babel-runtime": "^5.8.38",
     "babelify": "^7.3.0",
     "react": "^15.0.2",
     "react-dom": "^15.0.2",
+    "react-icon": "^1.0.0",
     "watchify": "^3.7.0",
     "whatwg-fetch": "^1.0.0"
   }
