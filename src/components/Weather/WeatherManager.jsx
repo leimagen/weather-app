@@ -2,6 +2,7 @@ var React = require('react');
 var HTTP = require('../../services/httpservice');
 var WeatherCity = require('./WeatherCity.jsx');
 var WeatherListManager = require('./WeatherListManager.jsx');
+var thisVar;
 
 const APIKey = '&APPID=15acb64267f5415390706b5c7e2c2b03';
 
